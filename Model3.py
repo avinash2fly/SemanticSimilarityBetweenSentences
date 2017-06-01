@@ -19,7 +19,7 @@ ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 brown_ic = wordnet_ic.ic('ic-brown.dat')
 
-
+# hey
 def wordSimilarity(ss1, ss2):
     '''
     ss1 and ss2 are synset object of word 1 and word 2 respectively.
