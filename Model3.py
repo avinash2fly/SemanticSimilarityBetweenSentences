@@ -143,10 +143,8 @@ def similarity(wordList1, wordList2, total_word, exclusion):
     tags = tagger.tag(list(wordList2 - exclusion))
     for wordss in tags:
         word = wordss[0]
-        #if(wordss[1][0].lower() in ['V', 'N']):
-        wordnetTag = get_wordnet_pos(wordss[1][0]);
-        if wordnetTag!='':
-            word = wnl.lemmatize(word,wordnetTag)
+        if(wordss[1][0].lower() in ['V', 'N']):
+            word = wnl.lemmatize(word, wordss[1][0].lower())
         if ps.stem(word) in temp:
             match += 1
 
@@ -166,7 +164,7 @@ def wordOrderSimilarity(T1, T2):
         if t in T or t in stop:
             continue
         T[t] = T1[t]
-
+        
     for t in T2:
         if t in T or t in stop:
             continue
@@ -203,17 +201,17 @@ def semanticSimilarity(T1, T2):
     #T2 = tokenizeSynset(sent2)
     T = {}
     stop = set(stopwords.words('english'))
-
+    
     for t in T1:
         if t in T or t in stop:
             continue
         T[t] = T1[t]
-
+        
     for t in T2:
         if t in T or t in stop:
             continue
         T[t] = T2[t]
-
+        
     s1 = []
     s2 = []
     for word in T:
@@ -243,7 +241,7 @@ def predict(sent1, sent2, threshold, delta, alpha):
     stop = set(stopwords.words('english'))
     questions = set(['what', 'who', 'when', 'how', 'why', 'where'])
     stop = stop - questions
-
+    
     #tokens1 = tokenize(sent1)
     #tokens2 = tokenize(sent2)
 
