@@ -19,6 +19,8 @@ ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 brown_ic = wordnet_ic.ic('ic-brown.dat')
 
+speechTag={}
+
 
 def wordSimilarity(ss1, ss2):
     '''
