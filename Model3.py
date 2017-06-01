@@ -143,8 +143,9 @@ def similarity(wordList1, wordList2, total_word, exclusion):
     tags = tagger.tag(list(wordList2 - exclusion))
     for wordss in tags:
         word = wordss[0]
-        if(wordss[1][0].lower() in ['V', 'N']):
-            word = wnl.lemmatize(word, wordss[1][0].lower())
+        wordTag = get_wordnet_pos(wordss[1][0])
+        if wordTag!='':
+            word = wnl.lemmatize(word, wordTag)
         if ps.stem(word) in temp:
             match += 1
 
