@@ -19,24 +19,25 @@ ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 brown_ic = wordnet_ic.ic('ic-brown.dat')
 
-# hey
+
 def wordSimilarity(ss1, ss2):
     '''
     ss1 and ss2 are synset object of word 1 and word 2 respectively.
     '''
     a = 0.2
     b = 0.45
-    ss1 = wn.synset('dog.n.01')
-    ss2 = wn.synset('cat.n.01')
-
+    #print("ss1 : {}, ss2 : {}".format(ss1, ss2))
     if ss1._pos != ss2._pos:
         return 0
 
     l = ss1.shortest_path_distance(ss2, simulate_root=False)
+    if l is None:
+        l = 0
+        h = 0
+    else:
+        lcs = ss1.lowest_common_hypernyms(ss2, simulate_root=False, use_min_depth=False)
+        h = lcs[0].max_depth()
     f1 = exp(-a*l)
-
-    lcs = ss1.lowest_common_hypernyms(ss2, simulate_root=False, use_min_depth=False)
-    h = lcs[0].max_depth()
     f2 = (exp(b*h) - exp(-b*h))/(exp(b*h) + exp(-b*h))
 
     return f1*f2
@@ -44,18 +45,20 @@ def wordSimilarity(ss1, ss2):
 
 def mostSimilarWord(ss1, synsetList, threshold):
     similarityScore = 0
-    mostSimilarWord = ''
+    mostSimilarWord = None
     stop = set(stopwords.words('english'))
+    if ss1 is None:
+        return mostSimilarWord, similarityScore
     for ss2 in synsetList:
-        if ss2 in stop:
+        if ss2 in stop or synsetList[ss2] is None:
             continue
-        s = wordSimilarity(ss1, ss2)
+        s = wordSimilarity(ss1, synsetList[ss2])
         if s > similarityScore:
             mostSimilarWord = synsetList[ss2]
             similarityScore = s
     if similarityScore > threshold:
         return mostSimilarWord, similarityScore*information_content(ss1, brown_ic)*information_content(mostSimilarWord, brown_ic)
-    return mostSimilarWord, 0
+    return mostSimilarWord, similarityScore
 
 
 
@@ -127,7 +130,7 @@ def similarity(wordList1, wordList2, total_word, exclusion):
     tags = tagger.tag(list(wordList2 - exclusion))
     for wordss in tags:
         word = wordss[0]
-        if(wordss[1][0].lower() in ['V', 'N']):
+        if(wordss[1][0].lower() in ['v', 'n']):
             word = wnl.lemmatize(word, wordss[1][0].lower())
         if ps.stem(word) in temp:
             match += 1
@@ -156,19 +159,19 @@ def wordOrderSimilarity(T1, T2):
 
     for word in T:
         if word in T1:
-            r1.append(T1.index(word)+1)
-            #r1.append(T1[word]+1)
+            #r1.append(T1.index(word)+1)
+            r1.append(T1[word]+1)
         else:
-            mostSimSs, simScore = mostSimilarWord(T[word], T1, 0.6)
-            r1.append(T1.index(mostSimSs)+1)
-            #r1.append(0)
+            #mostSimSs, simScore = mostSimilarWord(T[word], T1, 0.6)
+            #r1.append(T1.index(mostSimSs)+1)
+            r1.append(0)
         if word in T2:
-            r2.append(T2.index(word)+1)
-            #r2.append(T2[word]+1)
+            #r2.append(T2.index(word)+1)
+            r2.append(T2[word]+1)
         else:
-            mostSimSs, simScore = mostSimilarWord(T[word], T2, 0.6)
-            r2.append(T2.index(mostSimSs)+1)
-            #r2.append(0)
+            #mostSimSs, simScore = mostSimilarWord(T[word], T2, 0.6)
+            #r2.append(T2.index(mostSimSs)+1)
+            r2.append(0)
 
     num = 0
     den = 0
@@ -199,6 +202,7 @@ def semanticSimilarity(T1, T2):
     s1 = []
     s2 = []
     for word in T:
+        #print(word)
         if word in T1:
             s1.append(1)
         else:
@@ -226,17 +230,17 @@ def predict(sent1, sent2, threshold, delta, alpha):
     questions = set(['what', 'who', 'when', 'how', 'why', 'where'])
     stop = stop - questions
     
-    #tokens1 = tokenize(sent1)
-    #tokens2 = tokenize(sent2)
+    tokens1 = tokenize(sent1)
+    tokens2 = tokenize(sent2)
 
-    tokens1 = tokenizeSynset(sent1)
-    tokens2 = tokenizeSynset(sent2)
+    #tokens1 = tokenizeSynset(sent1)
+    #tokens2 = tokenizeSynset(sent2)
 
     total_word = set(tokens1.keys()).union(set(tokens2.keys())) - stop
 
     wordSimilarity = similarity(set(tokens1.keys()), set(tokens2.keys()), total_word, stop)
     wordOrderScore = wordOrderSimilarity(tokens1, tokens2)
-    semanticScore = semanticSimilarity(tokens1, tokens2)
+    semanticScore = semanticSimilarity(tokenizeSynset(sent1), tokenizeSynset(sent2))
     #semanticScore = semanticSimilarity(sent1, sent2)
 
     result = alpha*delta*semanticScore + (1 - delta)*wordOrderScore + (1-alpha)*delta*wordSimilarity
