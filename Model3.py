@@ -10,15 +10,31 @@ import re
 import time
 from math import *
 from itertools import chain
+from nltk.corpus import wordnet
 
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tag.perceptron import PerceptronTagger
 
-tagger = PerceptronTagger() 
+tagger = PerceptronTagger()
 ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 brown_ic = wordnet_ic.ic('ic-brown.dat')
 
+
+#dictionary for tagging parts of speech
+
+def get_wordnet_pos(tag):
+
+    if tag.startswith('J'):
+        return wordnet.ADJ
+    elif tag.startswith('V'):
+        return wordnet.VERB
+    elif tag.startswith('N'):
+        return wordnet.NOUN
+    elif tag.startswith('R'):
+        return wordnet.ADV
+    else:
+        return ''
 
 def wordSimilarity(ss1, ss2):
     '''
