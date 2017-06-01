@@ -20,7 +20,6 @@ ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 brown_ic = wordnet_ic.ic('ic-brown.dat')
 
-
 #dictionary for tagging parts of speech
 #speechTag={}
 
