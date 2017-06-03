@@ -20,8 +20,8 @@ ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 brown_ic = wordnet_ic.ic('ic-brown.dat')
 
-
 #dictionary for tagging parts of speech
+#speechTag={}
 
 def get_wordnet_pos(tag):
 
@@ -152,8 +152,9 @@ def similarity(wordList1, wordList2, total_word, exclusion):
     tags = tagger.tag(list(wordList2 - exclusion))
     for wordss in tags:
         word = wordss[0]
-        if(wordss[1][0].lower() in ['v', 'n']):
-            word = wnl.lemmatize(word, wordss[1][0].lower())
+        wordTag = get_wordnet_pos(wordss[1][0])
+        if wordTag!='':
+            word = wnl.lemmatize(word, wordTag)
         if ps.stem(word) in temp:
             match += 1
 
@@ -224,7 +225,6 @@ def semanticSimilarity(T1, T2):
     s1 = []
     s2 = []
     for word in T:
-        #print(word)
         if word in T1:
             s1.append(1)
         else:
