@@ -36,6 +36,11 @@ def get_wordnet_pos(tag):
     else:
         return ''
 
+def penalty(tag):
+    if get_wordnet_pos(tag) != 'n':
+        return 0.5
+    return 1
+
 def wordSimilarity(ss1, ss2):
     '''
     ss1 and ss2 are synset object of word 1 and word 2 respectively.
@@ -56,7 +61,7 @@ def wordSimilarity(ss1, ss2):
     f1 = exp(-a*l)
     f2 = (exp(b*h) - exp(-b*h))/(exp(b*h) + exp(-b*h))
 
-    return f1*f2
+    return penalty(ss1._pos)*f1*f2
 
 
 def mostSimilarWord(ss1, synsetList, threshold):
@@ -72,8 +77,9 @@ def mostSimilarWord(ss1, synsetList, threshold):
         if s > similarityScore:
             mostSimilarWord = synsetList[ss2]
             similarityScore = s
-    if similarityScore > threshold:
-        return mostSimilarWord, similarityScore*information_content(ss1, brown_ic)*information_content(mostSimilarWord, brown_ic)
+    if similarityScore >= threshold:
+        #return mostSimilarWord, similarityScore*information_content(ss1, brown_ic)*information_content(mostSimilarWord, brown_ic)
+        return mostSimilarWord, similarityScore
     return mostSimilarWord, similarityScore
 
 
@@ -222,12 +228,12 @@ def semanticSimilarity(T1, T2):
         if word in T1:
             s1.append(1)
         else:
-            mostSimSs, simScore = mostSimilarWord(T[word], T1, 0.6)
+            mostSimSs, simScore = mostSimilarWord(T[word], T1, 0.8)
             s1.append(simScore)
         if word in T2:
             s2.append(1)
         else:
-            mostSimSs, simScore = mostSimilarWord(T[word], T2, 0.6)
+            mostSimSs, simScore = mostSimilarWord(T[word], T2, 0.8)
             s2.append(simScore)
 
     num = 0
@@ -241,7 +247,7 @@ def semanticSimilarity(T1, T2):
 
 
 
-def predict(sent1, sent2, threshold, delta, alpha):
+def predict(sent1, sent2, threshold, alpha, beta, gamma):
     stop = set(stopwords.words('english'))
     questions = set(['what', 'who', 'when', 'how', 'why', 'where'])
     stop = stop - questions
@@ -259,7 +265,7 @@ def predict(sent1, sent2, threshold, delta, alpha):
     semanticScore = semanticSimilarity(tokenizeSynset(sent1), tokenizeSynset(sent2))
     #semanticScore = semanticSimilarity(sent1, sent2)
 
-    result = alpha*delta*semanticScore + (1 - delta)*wordOrderScore + (1-alpha)*delta*wordSimilarity
+    result = alpha*semanticScore + beta*wordOrderScore + gamma*wordSimilarity
     #result = delta*wordSimilarity + (1 - delta)*wordOrderScore
 
     if result < threshold:
