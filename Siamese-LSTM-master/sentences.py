@@ -62,8 +62,10 @@ def embed(stmx):
         if stmx[count] in dtr:
             dmtr[count]=model[dtr[stmx[count]]]
             count+=1
-        else:
+        elif stmx[count] in model:
             dmtr[count]=model[stmx[count]]
+            count+=1
+        else:
             count+=1
     return dmtr
 
