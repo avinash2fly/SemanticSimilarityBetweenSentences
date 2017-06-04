@@ -353,6 +353,7 @@ def performance(prediction, Y):
     TP = 0
     FP = 0
     FN = 0
+    TN = 0
     for i in range(len(prediction)):
         if prediction[i] == 1:
             if Y[i] == 1:
@@ -361,6 +362,8 @@ def performance(prediction, Y):
                 FP += 1
         elif prediction[i] == 0 and Y[i] == 1:
             FN += 1
+        else:
+            TN += 1
     if (TP + FP) == 0:
         precision = 0
     else:
@@ -372,9 +375,10 @@ def performance(prediction, Y):
     if precision + recall == 0:
         return 0, 0, 0
     F = 2*precision*recall/(precision + recall)
+    naivePrecision = (TP + TN)/(TP + FP + TN + FN)
 
     #print("threshod : {0:4.2f}, alpha : {1:4.2f}, beta : {6:4.2f}, beta : {7:4.2f}, Precision : {2:6.4f}, Recall : {3:6.4f}, F : {4:6.4f}, Run time : {5:6.4f} seconds".format(threshold, alpha, precision, recall, F, time.time()-start_time, beta, gamma))
-    return precision, recall, F
+    return precision, recall, F, naivePrecision
 
 
 
@@ -397,8 +401,10 @@ X = extractFeatures(X_raw)
 #sls=lstm("bestsem.p",load=True,training=False)
 
 
-p_model = perceptron(rate = 0.1, n_iter = 100)
-y_p = p_model.fit(X, Y, [-0.45, 0.7, 0.3])
+p_model = perceptron(rate = 0.01, n_iter = 1000)
+p_model.fit(X, Y, [-0.45, 0.7, 0.3])
+y_p = p_model.predict(X)
+precision, recall, Fscore = p_model.performance(y_p, Y)
 
 precision = []
 recall = []
