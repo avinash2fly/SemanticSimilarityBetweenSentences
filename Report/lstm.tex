@@ -1,9 +1,10 @@
 
 \subsubsection{Overview}
-In this approach, we present  siamese adaption of Long Short-Term Memory(LSTM) network for labeled data contains pairs of variable-length sequences. This model is used to get the semantic similairty between the sentences using complex neural network. For this applications, we provide word-embedding vectors supplemented with synonymic information to the LSTMs, which use a fixed size vector to convert the syntactic meaning of the sentence. 
+\par In this approach, we present  siamese adaption of Long Short-Term Memory(LSTM) network for labeled data contains pairs of variable-length sequences. This model is used to get the semantic similairty between the sentences using complex neural network. For this applications, we provide word-embedding vectors supplemented with synonymic information to the LSTMs, which use a fixed size vector to convert the syntactic meaning of the sentence. 
 
 \subsubsection{Model}
-It's a supervised learning model, where each data consists of pair of sequences $(x_1^{(a)},...,x_{n_a}^{(a)}), (x_1^{(b)},...,x_{n_b}^{(b)})$ of fixed size vectors along with a single label y(human labeled) for the pair. Note that sequences may be differenent length. These data will be pass to the model with a purpose of learning the semantics. 
+\par It's a supervised learning model, where each data consists of pair of sequences 
+$(x_1^{(a)},...,x_{n_a}^{(a)})$, $(x_1^{(b)},...,x_{n_b}^{(b)})$ of fixed size vectors along with a single label y(human labeled) for the pair. Note that sequences may be differenent length. These data will be pass to the model with a purpose of learning the semantics. 
  \begin{figure}[h]
     \centering
     \includegraphics[width=.75\textwidth]{lstm_image}
