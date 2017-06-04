@@ -1,6 +1,7 @@
 \section{Introduction}
-\par With over 100 millions of monthly visitor in Quora, it is inevitable that many people are asking similar questions. This has become an issue as user has to read through responses to many questions in order to find the best answer. The aim of this project is to implement algorithms to identify 2 similar questions which can help Quora in improving user experience by finding high quality answers to questions.
+\justify
+With over 100 millions of monthly visitor in Quora, it is inevitable that many people are asking similar questions. This has become an issue as user has to read through responses to many questions in order to find the best answer. The aim of this project is to implement algorithms to identify 2 similar questions which can help Quora in improving user experience by finding relevant high quality answers.
 
-\par The 2 approaches used in this project were perceptron learning and LSTM. In the perceptron learning, we used 3 inputs which measured semantic similarity, word order and word overlaps between 2 sentences. In LSTM, we provide word-embedding vectors supplemented with synonymic information and calculates the manhattan distance between the vectors.
+The 2 approaches used in this project were perceptron learning and LSTM. In the perceptron learning, we used 2 inputs which measured semantic similarity and word order. In LSTM, we used word-embedding vectors supplemented with synonymic information and computed the similarity function which dependent on the manhattan distance between the vectors.
 
-\par We will see that for our case the performance of the 2 models were quite similar. However, there are other research done on LSTM where it has been shown that LSTM has the potential to performs well with enough training and with careful selection of initial weight.
+We will see that for our case the performance of the 2 models were quite similar. However, there are other research done on LSTM where it has been shown that LSTM has the potential to performs well with enough training and with careful selection of initial weight.
