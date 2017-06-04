@@ -1,15 +1,23 @@
 \documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
 
 \usepackage{array}
-\setlength{\parindent}{0em}
+\setlength{\parindent}{4em}
 \setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1.5}
 
 \usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
-
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{tikz-qtree}
 \usepackage[document]{ragged2e}
 \usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode	
 \usepackage{amsmath}
+
 
 
 \title{COMP9417 - Assignment 2}
@@ -19,28 +27,26 @@
 \begin{document}
 \maketitle
 
+\justify
 \section{Introduction}
 \input{introduction}
 
 
 \section{Methodology}
-In this project, we used WordNet as the main lexical database. Using WordNet, we were able to extract the part-of-speech tags for a word as well as their synset (synonym set). This played an important role in determining the similarity of 2 words as we would see later.
-
+\input{methodology}
 \input{perceptron}
 
 
 
 \pagebreak
 \subsection{Method 2 : LSTM - RNN}
-%\input{lstm}
+\input{lstm}
 
-
-
-\section{Result & Discussion}
+\section{Result \& Discussion}
 %\input{result}
 
 \subsection{Conclusion}
- \subsection{Limitation \& Improvement}
+\subsection{Limitation \& Improvement}
 
 
 

@@ -10,11 +10,14 @@ class perceptron():
         y_predict = np.dot(x, self.weights[1:]) + self.weights[0]
         return np.where(y_predict >= 0, 1, 0)
 
-    def fit(self, X = [], Y = []):
+    def fit(self, X = [], Y = [] weights = None):
         if len(X) == 0:
             return self
         #Initialize weights
-        self.weights = np.random.normal(loc=0, scale=1, size=len(X[0]) + 1)
+        if weights is None:
+            self.weights = np.random.normal(loc=0, scale=1, size=len(X[0]) + 1)
+        else:
+            self.weights = weights
         # Keep track of incorrect prediction
         self.error = []
 

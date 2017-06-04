@@ -5,9 +5,12 @@ The first model was a a simple perceptron with 2 inputs which were based on [ins
 \subsubsection{Words Similarity}
 A \textbf{path length} between 2 words is the number of synsets we visit from one word to another. For example, in the figure below, to get from boy to girl we have to visit boy - male - person - female - girl. Therefore, the path length of 'boy' and 'girl' is 4. 'Person' is called the subsumer of 'boy' and 'girl'. If there are more than 1 path, we will consider the shortest path and the corresponding subsumer is called the \textbf{lowest subsumer}.
 
-\begin{center}
+
+ \begin{figure}
+\centering
 \includegraphics[scale=0.7]{Synset_tree}
-\end{center}
+\caption{Synset Tree}
+ \end{figure}
 
 Let $l$ denote the shortest path and $h$ denote the depth of the lowest subsumer. The similarity between 2 words $w_1$ and $w_2$ is therefore measured by 
 \begin{equation*}
