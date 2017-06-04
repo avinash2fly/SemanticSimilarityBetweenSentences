@@ -3,7 +3,7 @@
 \usepackage{array}
 \setlength{\parindent}{4em}
 \setlength{\parskip}{1em}
-\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\baselinestretch}{1.25}
 
 \usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
@@ -27,26 +27,33 @@
 \begin{document}
 \maketitle
 
+
+\newpage
+\tableofcontents
+\newpage
+
 \justify
-\section{Introduction}
+
 \input{introduction}
 
-
-\section{Methodology}
 \input{methodology}
-\input{perceptron}
 
-
-
-\pagebreak
-\subsection{Method 2 : LSTM - RNN}
-\input{lstm}
 
 \section{Result \& Discussion}
-%\input{result}
 
 \subsection{Conclusion}
 \subsection{Limitation \& Improvement}
+
+\section{Appendix}
+\input{perceptron}
+\input{lstm}
+\input{dependencies}
+
+
+
+
+
+
 
 
 

@@ -10,7 +10,7 @@ class perceptron():
         y_predict = np.dot(x, self.weights[1:]) + self.weights[0]
         return np.where(y_predict >= 0, 1, 0)
 
-    def fit(self, X = [], Y = [] weights = None):
+    def fit(self, X = [], Y = [], weights = None):
         if len(X) == 0:
             return self
         #Initialize weights

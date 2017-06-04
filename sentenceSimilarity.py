@@ -17,7 +17,7 @@ import re
 import time
 import csv
 from perceptron import *
-from lstm import *
+#from lstm import *
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
 
@@ -394,20 +394,11 @@ for row in reader:
 X = extractFeatures(X_raw)
 
 # LSTM - RNN model
-sls=lstm("bestsem.p",load=True,training=False)
-
-linear_model = LinearRegression(fit_intercept=True)
-xnp = np.array(X)
-
-linear_model.fit(xnp, Y)
-y_pred = linear_model.predict(X)
-y_pred = [int(y >= 0) for y in y_pred]
-
-log_model = LogisticModel()
-log_model.fit(xnp, Y)
+#sls=lstm("bestsem.p",load=True,training=False)
 
 
 p_model = perceptron(rate = 0.1, n_iter = 100)
+y_p = p_model.fit(X, Y, [-0.45, 0.7, 0.3])
 
 precision = []
 recall = []
