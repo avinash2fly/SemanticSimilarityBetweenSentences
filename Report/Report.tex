@@ -1,15 +1,15 @@
 \documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+
 \usepackage{array}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
 
 \usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
-%\geometry{landscape}                		% Activate for rotated page geometry
-%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
-								% TeX will automatically convert eps --> pdf in pdflatex		
-\usepackage{amssymb}
+
+\usepackage[document]{ragged2e}
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode	
+\usepackage{amsmath}
 
 %SetFonts
 
@@ -23,37 +23,25 @@
 \begin{document}
 \maketitle
 
-
 \section{Introduction}
+\input{introduction}
 
-With over 100 millions of monthly visitor in Quora, it is inevitable that many people are asking similar questions. This has become an issue as user has to read through responses to many questions in order to find the best answer. The aim of this project is to implement algorithms to identify 2 similar questions which can help Quora in improving user experience by finding high quality answers to questions.
-
-The 2 approaches used in this project were perceptron learning and LSTM. In the perceptron learning, we used 3 inputs which measured semantic similarity, word order and word overlaps between 2 sentences.
-
-In LSTM, bla bla bla bla
-
-We will see that for our case the performance of the 2 models were quite similar. However, there are other research done on LSTM where it has been shown that LSTM has the potential to performs well with enough training and with careful selection of initial weight.
-%\subsection{}
 
 \section{Methodology}
+In this project, we used wordnet as the main lexical database. Using wordnet, we were able to extract the part-of-speech tags for a word as well as their synset (synonym set). This played an important role in determining the similarity of 2 words as we would see later.
 
-\subsection{Method 1 : Perceptron}
-- What do we implement (Theory)
-- How do we implement it
+\input{perceptron}
 
+
+
+\pagebreak
 \subsection{Method 2 : LSTM - RNN}
-- What do we implement (Theory)
-- How do we implement it
-
-LSTM is a recurrent neural network which was first developed by Sepp Hochreiter and Jurgen Schmidhuber in 1997. It has advantage over traditional neural network model as it is able to remember information which it has seen previously. This has caused RNN to gain popularity in recent years in NLP thus making it an important model to look at.
-
-\subsubsection{Overview}
-The RNN which we looked at is the Long Short-Term Memory (LSTM) RNN. Each of the nodes in LSTM RNN consists of 3 main gates namely, the forget gate, the input gate and the output gate.  
+%\input{lstm}
 
 
 
 \section{Result}
-How do they perform
+%\input{result}
 
 \section{Discussion}
 \subsection{Conclusion}

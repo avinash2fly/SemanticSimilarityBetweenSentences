@@ -17,13 +17,12 @@ import re
 import time
 import csv
 from perceptron import *
+from lstm import *
 
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
 
 
 
-import csv
 
 tagger = PerceptronTagger()
 ps = PorterStemmer()
@@ -346,7 +345,7 @@ def extractFeatures(X):
 X_raw = []
 Y = []
 
-filename = 'sample.csv'
+filename = 'sample_500.csv'
 csvfile = open(filename,encoding='utf-8')
 reader = csv.reader(csvfile)
 reader.__next__()  # Ignoring the header
@@ -354,9 +353,6 @@ for row in reader:
     X_raw.append([row[3], row[4]])
     Y.append(int(row[5]))
 
-#bigram_measures = nltk.collocations.BigramAssocMeasures()
-#finder = BigramCollocationFinder.from_words(wn.words())
-#finder.apply_freq_filter(2)
 
 X = extractFeatures(X_raw)
 
@@ -364,8 +360,12 @@ X = extractFeatures(X_raw)
 model = perceptron(rate = 0.1, n_iter = 100)
 model.fit(X, Y)
 
+model.weights = [-0.45, 0.7, 0.3]
 Y_predict = list(model.predict(X))
 
+precision, recall Fscore = model.performance(Y_predict, Y)
+
+'''
 feature1 = []
 feature2 = []
 for i in range(len(Y_predict)):
@@ -385,3 +385,4 @@ for i in range(len(Y_predict)):
 plt.plot(feature1, feature2, "bx")
 
 plt.show()
+'''

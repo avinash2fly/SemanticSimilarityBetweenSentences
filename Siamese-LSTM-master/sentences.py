@@ -8,7 +8,7 @@ dtr=pickle.load(open("dwords.p",'rb'), encoding='latin1')
 print("Loading Word2Vec")
 #model=np.load("modelgensim.npy").item()
 
-#model = KeyedVectors.load_word2vec_format("GoogleNews-vectors-negative300.bin.gz",binary=True)
+model = KeyedVectors.load_word2vec_format("GoogleNews-vectors-negative300.bin.gz",binary=True)
 
 
 
