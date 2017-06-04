@@ -1,6 +1,7 @@
 from lstm import *
 import matplotlib.pyplot as plt
 import csv
+from 
 sls=lstm("bestsem.p",load=True,training=False)
 
 '''
@@ -27,7 +28,10 @@ for x in X_raw:
     sc = sls.predict_similarity(x[0], x[1])*4.0+1.0
     score.append(sc[-1])
 
+
+'''
 index = [i for i in range(len(score))]
 plt.plot(index, [score[i]*int(Y[i]==1) for i in range(len(index))], 'bx')
 plt.plot(index, [score[i]*int(Y[i]==0) for i in range(len(index))], 'ro')
 plt.show()
+'''

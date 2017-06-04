@@ -17,7 +17,9 @@ import re
 import time
 import csv
 from perceptron import *
-from lstm import *
+#from lstm import *
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 
 import matplotlib.pyplot as plt
 
@@ -342,6 +344,41 @@ def extractFeatures(X):
 
 
 
+def performance(prediction, Y):
+    '''
+       TP  |  FN
+       ----------
+       FP  |  TN
+    '''
+    TP = 0
+    FP = 0
+    FN = 0
+    for i in range(len(prediction)):
+        if prediction[i] == 1:
+            if Y[i] == 1:
+                TP += 1
+            else:
+                FP += 1
+        elif prediction[i] == 0 and Y[i] == 1:
+            FN += 1
+    if (TP + FP) == 0:
+        precision = 0
+    else:
+        precision = TP/(TP + FP)
+    if (TP + FN) == 0:
+        recall = 0
+    else:
+        recall = TP/(TP + FN)
+    if precision + recall == 0:
+        return 0, 0, 0
+    F = 2*precision*recall/(precision + recall)
+
+    #print("threshod : {0:4.2f}, alpha : {1:4.2f}, beta : {6:4.2f}, beta : {7:4.2f}, Precision : {2:6.4f}, Recall : {3:6.4f}, F : {4:6.4f}, Run time : {5:6.4f} seconds".format(threshold, alpha, precision, recall, F, time.time()-start_time, beta, gamma))
+    return precision, recall, F
+
+
+
+
 X_raw = []
 Y = []
 
@@ -356,16 +393,66 @@ for row in reader:
 
 X = extractFeatures(X_raw)
 
+# LSTM - RNN model
+#sls=lstm("bestsem.p",load=True,training=False)
+
+
+p_model = perceptron(rate = 0.1, n_iter = 100)
+y_p = p_model.fit(X, Y, [-0.45, 0.7, 0.3])
+
+precision = []
+recall = []
+f_score = []
+
+
+for j in range(10):
+    P = []
+    R = []
+    F = []
+    for i in range(10):
+        p_model.weights = [-j/10, i/10, 1 - i/10]
+        y_p = list(p_model.predict(X))
+        p, r, f = performance(y_p, Y)
+        P.append(p)
+        R.append(r)
+        F.append(f)
+    precision.append(P)
+    recall.append(R)
+    f_score.append(F)
+
+
+
+'''
+
+filename = 'sample_500.csv'
+csvfile = open(filename,encoding='utf-8')
+reader = csv.reader(csvfile)
+reader.__next__()  # Ignoring the header
+X_raw = []
+Y = []
+for row in reader:
+    X_raw.append([row[3], row[4]])
+    Y.append(int(row[5]))
+
+
+score = []
+for x in X_raw:
+    sc = sls.predict_similarity(x[0], x[1])*4.0+1.0
+    score.append(sc[-1])
+
+
+
 
 model = perceptron(rate = 0.1, n_iter = 100)
 model.fit(X, Y)
 
-model.weights = [-0.45, 0.7, 0.3]
+model.weights = [-0.5, 0.7, 0.3]
 Y_predict = list(model.predict(X))
 
 precision, recall Fscore = model.performance(Y_predict, Y)
 
-'''
+
+
 feature1 = []
 feature2 = []
 for i in range(len(Y_predict)):
