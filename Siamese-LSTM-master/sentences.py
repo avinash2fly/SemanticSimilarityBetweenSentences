@@ -8,7 +8,7 @@ dtr=pickle.load(open("dwords.p",'rb'), encoding='latin1')
 print("Loading Word2Vec")
 #model=np.load("modelgensim.npy").item()
 
-model = KeyedVectors.load_word2vec_format("GoogleNews-vectors-negative300.bin.gz",binary=True)
+#model = KeyedVectors.load_word2vec_format("GoogleNews-vectors-negative300.bin.gz",binary=True)
 
 
 
@@ -62,8 +62,10 @@ def embed(stmx):
         if stmx[count] in dtr:
             dmtr[count]=model[dtr[stmx[count]]]
             count+=1
-        else:
+        elif stmx[count] in model:
             dmtr[count]=model[stmx[count]]
+            count+=1
+        else:
             count+=1
     return dmtr
 
