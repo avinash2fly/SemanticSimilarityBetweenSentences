@@ -3,7 +3,7 @@
 \usepackage{array}
 \setlength{\parindent}{4em}
 \setlength{\parskip}{1em}
-\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\baselinestretch}{1.25}
 
 \usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
@@ -30,7 +30,9 @@
 
 \begin{document}
 \maketitle
-
+\newpage
+\tableofcontents
+\newpage
 \section{Introduction}
 \input{introduction}
 
@@ -42,19 +44,44 @@ In this project, we used wordnet as the main lexical database. Using wordnet, we
 
 
 
-\pagebreak
+%\pagebreak
 \subsection{Method 2 : LSTM - RNN}
 %\input{lstm}
 
 
 \input{lstm}
+\section{Dependencies}
+
+\begin{enumerate}
+\item   Python packages
+
+\begin{itemize}
+\item nltk
+\item numpy
+\item Scipy
+\item gensim
+\item Theano
+\item cython
+\end{itemize}
+\item Tested System Configuration
+\begin{itemize}
+
+\item intel i5 6200u
+\item Intel HD Graphics 520
+\item 8 GB Ram
+\item 128GB SSD
+
+\end{itemize}
+
+\end{enumerate}
+
 \section{Result}
 %\input{result}
+
 
 \section{Discussion}
 \subsection{Conclusion}
  \subsection{Limitation \& Improvement}
-
 
 
 \end{document}  
